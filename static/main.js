@@ -65,11 +65,15 @@ let strokeStyle = '#000';
 })();
 // new position from mouse event
 function setPosition(e) {
+    e.preventDefault();
+
     pos.x = e.clientX;
     pos.y = e.clientY;
 }
 
 function setPositionTouch(e) {
+    e.preventDefault();
+
     pos.x = e.touches[0].pageX;
     pos.y = e.touches[0].pageY;
 }
@@ -80,6 +84,8 @@ function resize() {
 }
 
 function prepareDraw(e) {
+    e.preventDefault();
+
     const touch = e.type == 'touchmove'
     if (!touch && e.buttons !== 1 || !drawEnable) return;
     const old = {
