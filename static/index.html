@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pictionary</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.0/milligram.css">
+</head>
+
+<body>
+    <button id="newWord" class="button">New Word</button>
+    <div id="colorExample"></div>
+    <input id="color" type="range" min="0" max="360" value="0">
+    <input id="size" type="range" min="1" max="100" value="5">
+
+    <canvas id="drawing"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
