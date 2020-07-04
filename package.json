@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "deploy": "gcloud app deploy",
+    "view-live": "gcloud app browse"
   },
   "dependencies": {
     "express": "^4.17.1",
