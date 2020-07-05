@@ -34,7 +34,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('requestSync', () => {
-        console.log('request')
         io.in(room()).clients((err, clients) => {
             const [target] = clients.filter(client => client != socket.id)
             if (target) {
