@@ -14,7 +14,9 @@ socket.on('requestSync', data => socket.emit('drawSync', {
     draws: previousDraws
 }))
 socket.on('drawSync', data => {
-    clear();
+    draw({
+        clear: true
+    });
     data.forEach((o) => {
         draw(o)
     })
@@ -112,7 +114,7 @@ function prepareDraw(e) {
         point: point
     }
     draw(o)
-    socket.emit('draw', o) // Maybe move this to the top of the function
+    socket.emit('draw', o)
 }
 
 function draw(o) {
@@ -140,7 +142,7 @@ function draw(o) {
 }
 
 function clear() {
-    let o = {
+    const o = {
         clear: true
     }
     draw(o)
