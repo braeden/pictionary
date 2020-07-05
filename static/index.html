@@ -1,23 +1,36 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>Pictionary</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.0/milligram.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
-    <button id="newWord" class="button">New Word</button>
+    <button id="newWord" class="button">
+        <span class="material-icons">
+            format_quote
+        </span>
+    </button>
+    <button id="clear" class="button button-outline">
+        <span class="material-icons">
+            delete_sweep
+        </span>
+    </button>
+
     <div id="colorExample"></div>
+    <div id="sizeExample"></div>
+
     <input id="color" type="range" min="0" max="360" value="0">
     <input id="size" type="range" min="1" max="100" value="5">
 
     <canvas id="drawing"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-    <script type="module" src="main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 
 </html>
