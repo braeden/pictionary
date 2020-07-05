@@ -5,13 +5,19 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "dev": "tsc-watch",
     "deploy": "gcloud app deploy",
     "view-live": "gcloud app browse"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "typescript": "^3.9.6"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "tsc": "^1.20150623.0",
+    "tsc-watch": "^4.2.9"
+  }
 }
