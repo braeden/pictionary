@@ -1,5 +1,7 @@
 body {
     overscroll-behavior: contain;
+    width: 100%;
+    height: 100% !important;
 }
 
 #drawing {
@@ -18,35 +20,61 @@ body {
     right: 0;
     bottom: 3vh;
     width: 20vh;
-
 }
 
 
 #color {
-    top: 15vh;
-    right: -7vh;
+    top: 7em;
+    right: -3.45em;
     transform: rotate(270deg);
     margin: auto;
-    width: 20vh;
+    width: 10em;
 }
 
 #colorExample {
     position: absolute;
     background-color: #000;
-    top: 3vh;
+    top: 1em;
     width: 1em;
     height: 1em;
-    right: 1.9vh;
+    right: 1em;
     border-radius: 1em;
     border: 1px solid #aaa;
+}
+
+#sizeExample {
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: -5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    border: 1px dashed #333;
+    overflow: hidden;
+    background: repeating-linear-gradient(-55deg,
+            #eee,
+            #eee 5px,
+            #aaa 5px,
+            #aaa 10px);
 }
 
 input[type='range'] {
     position: absolute;
 }
 
-#newWord {
+.button {
     position: absolute;
+}
+
+#newWord {
     margin-left: 1em;
     margin-top: 1em;
+}
+
+#clear {
+    margin-left: 1em;
+    bottom: 0;
 }
