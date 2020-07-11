@@ -1,11 +1,12 @@
 export interface Drawing {
-    lineWidth?: number,
-    hue?: number,
-    old?: Point,
-    updated?: Point,
-    width?: number,
-    point?: boolean,
-    clear?: boolean
+    l?: number, //LineWidth
+    h?: number, //Hue
+    old?: Point, //Old
+    up?: Point, //Updated
+    w?: number, //Width
+    p?: boolean, //Point
+    clear?: boolean,
+    undo?: boolean
 }
 
 export interface RequestSyncInput {

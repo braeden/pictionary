@@ -47,6 +47,7 @@ io.on('connection', (socket) => {
     socket.on('drawSync', data => {
         if (data && data.requestID && data.draws) {
             socket.to(data.requestID).emit('drawSync', data.draws || [])
+            console.log(`Transmitted: ${data.draws.length}`)
         }
     })
 
