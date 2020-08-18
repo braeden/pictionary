@@ -1,8 +1,11 @@
-# Pictionary
+# [Pictionary](http://pictionary-282305.uc.r.appspot.com)
 
 ### A minimal browser real-time pictionary game using WebSockets. Generate words, create rooms, customize your brush -- live drawings are transmitted instantly to anyone with the same link.
 
-### Screenshots and gifs coming soon!
+# Images
+![screenshot](examples/screenshot1.png)
+
+<img src="examples/gif1.gif" width="300">
 
 # Installation
 ```
@@ -17,4 +20,4 @@ npm start
 gcloud config set project myproject
 gcloud app browse
 npm deploy
-```
+```alt="385"alt="385"
