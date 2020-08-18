@@ -20,4 +20,4 @@ npm start
 gcloud config set project myproject
 gcloud app browse
 npm deploy
-```alt="385"alt="385"
+```
