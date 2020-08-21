@@ -62,12 +62,12 @@ class Draw {
         e.addEventListener('touchstart', dis);
     }
     static handleEvent(e) {
-        const touch = e.type == 'touchmove' || e.type == 'touchstart';
         const point = e.type == 'touchstart' || e.type == 'mousedown';
-        if (!touch && e.buttons !== 1 || !Draw.enable)
+        if (e instanceof MouseEvent && e.buttons !== 1 || !Draw.enable)
             return;
+        e.preventDefault();
         const old = Object.assign({}, Draw.pos);
-        touch ? Draw.setPositionTouch(e) : Draw.setPosition(e);
+        e instanceof TouchEvent ? Draw.setPositionTouch(e) : Draw.setPosition(e);
         const up = Object.assign({}, Draw.pos);
         const o = {
             l: Draw.lineWidth,

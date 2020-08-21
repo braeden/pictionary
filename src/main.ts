@@ -86,14 +86,14 @@ class Draw {
         e.addEventListener('touchstart', dis)
     }
 
-    static handleEvent(e: any): void {
-        const touch = e.type == 'touchmove' || e.type == 'touchstart'
+    static handleEvent(e: TouchEvent | MouseEvent): void {
         const point = e.type == 'touchstart' || e.type == 'mousedown'
-        if (!touch && e.buttons !== 1 || !Draw.enable) return;
+        if (e instanceof MouseEvent && e.buttons !== 1 || !Draw.enable) return;
+        e.preventDefault();
         const old = {
             ...Draw.pos
         }
-        touch ? Draw.setPositionTouch(e) : Draw.setPosition(e);
+        e instanceof TouchEvent ? Draw.setPositionTouch(e) : Draw.setPosition(e);
         const up = {
             ...Draw.pos
         }
@@ -109,7 +109,7 @@ class Draw {
         socket.emit('draw', o)
     }
 
-    static setPosition(e: any): void {
+    static setPosition(e: MouseEvent): void {
         Draw.pos.x = e.clientX * Surface.dpi;
         Draw.pos.y = e.clientY * Surface.dpi;
     }

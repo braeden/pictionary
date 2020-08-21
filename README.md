@@ -21,3 +21,7 @@ gcloud config set project myproject
 gcloud app browse
 npm deploy
 ```
+
+# Todo
+- Add webaudio on main web-app
+- Build out a Redis cache to do room managment -- this will actually let us scale horizontally on the main app
