@@ -6,8 +6,6 @@ import * as Interface from './interfaces'
 //@ts-ignore
 const socket = io();
 
-const strokeStyle = (value: number): string => `hsl(${value}, 100%, ${value % 360 === 0 ? (value / 360) * 100 : 50}%)`
-
 class Surface {
     //@ts-ignore
     static c: HTMLCanvasElement = document.getElementById('drawing')
@@ -41,7 +39,7 @@ class Draw {
 
     static enable = true;
     static lineWidth = 10 * Surface.dpi;
-    static hue = 0;
+    static hue = "#000000";
 
 
     static draw(o: Interface.Drawing): void {
@@ -54,11 +52,11 @@ class Draw {
         } else {
             const scale = Surface.c.width / o.w
             Surface.ctx.beginPath();
-            Surface.ctx.strokeStyle = strokeStyle(o.h)
+            Surface.ctx.strokeStyle = o.h
             Surface.ctx.lineCap = 'round'
             if (o.p) {
                 Surface.ctx.lineWidth = 1;
-                Surface.ctx.fillStyle = strokeStyle(o.h);
+                Surface.ctx.fillStyle = o.h;
                 Surface.ctx.arc(o.up.x * scale, o.up.y * scale, o.l * scale / 2, 0, 2 * Math.PI);
             } else {
                 Surface.ctx.lineWidth = o.l * scale
@@ -78,12 +76,6 @@ class Draw {
         array.forEach((o: Interface.Drawing) => {
             Draw.draw(o)
         })
-    }
-
-    static disableForElement(e: HTMLElement): void {
-        const dis = () => Draw.enable = false
-        e.addEventListener('mousedown', dis)
-        e.addEventListener('touchstart', dis)
     }
 
     static handleEvent(e: TouchEvent | MouseEvent): void {
@@ -144,34 +136,23 @@ socket.on('draw', Draw.draw);
 
 
 (function setupListeners(): void {
-
     window.addEventListener('resize', Surface.resize);
-    document.addEventListener('mousemove', Draw.handleEvent);
-    document.addEventListener('mousedown', Draw.handleEvent);
-    document.addEventListener('mouseenter', Draw.setPosition);
-    document.addEventListener('mouseup', () => {
-        Draw.enable = true
+
+    ['mousemove', 'mousedown', 'touchmove', 'touchstart'].forEach(event => {
+        document.getElementById('drawing').addEventListener(event, Draw.handleEvent)
     })
-    document.addEventListener('touchend', () => {
-        Draw.enable = true
-    })
+    document.getElementById('drawing').addEventListener('mouseenter', Draw.setPosition);
 
-    document.addEventListener('touchmove', Draw.handleEvent);
-    document.addEventListener('touchstart', Draw.handleEvent);
-
-
-    [...document.getElementsByTagName('input'), ...document.getElementsByTagName('button')].forEach(Draw.disableForElement);
     document.getElementById('color').addEventListener('input', (e: InputEvent) => {
-        Draw.hue = parseInt((e.srcElement as HTMLInputElement).value);
-        document.getElementById('colorExample').style.backgroundColor = strokeStyle(Draw.hue)
+        Draw.hue = (e.target as HTMLInputElement).value;
     })
 
     document.getElementById('size').addEventListener('input', e => {
         const example = document.getElementById('sizeExample').style
-        example.width = (e.srcElement as HTMLInputElement).value
-        example.height = (e.srcElement as HTMLInputElement).value
-        example.marginBottom = (-(e.srcElement as HTMLInputElement).value / 2).toString()
-        Draw.lineWidth = parseInt((e.srcElement as HTMLInputElement).value) * Surface.dpi;
+        example.width = (e.target as HTMLInputElement).value
+        example.height = (e.target as HTMLInputElement).value
+        example.marginBottom = (-(e.target as HTMLInputElement).value / 2).toString()
+        Draw.lineWidth = parseInt((e.target as HTMLInputElement).value) * Surface.dpi;
     })
 
     document.getElementById('newWord').addEventListener('click', () => {

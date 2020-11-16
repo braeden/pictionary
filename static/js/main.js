@@ -1,7 +1,6 @@
 import { hardWords } from './words.js';
 //@ts-ignore
 const socket = io();
-const strokeStyle = (value) => `hsl(${value}, 100%, ${value % 360 === 0 ? (value / 360) * 100 : 50}%)`;
 class Surface {
     static setup() {
         Surface.ctx.imageSmoothingEnabled = false;
@@ -31,11 +30,11 @@ class Draw {
         else {
             const scale = Surface.c.width / o.w;
             Surface.ctx.beginPath();
-            Surface.ctx.strokeStyle = strokeStyle(o.h);
+            Surface.ctx.strokeStyle = o.h;
             Surface.ctx.lineCap = 'round';
             if (o.p) {
                 Surface.ctx.lineWidth = 1;
-                Surface.ctx.fillStyle = strokeStyle(o.h);
+                Surface.ctx.fillStyle = o.h;
                 Surface.ctx.arc(o.up.x * scale, o.up.y * scale, o.l * scale / 2, 0, 2 * Math.PI);
             }
             else {
@@ -55,11 +54,6 @@ class Draw {
         array.forEach((o) => {
             Draw.draw(o);
         });
-    }
-    static disableForElement(e) {
-        const dis = () => Draw.enable = false;
-        e.addEventListener('mousedown', dis);
-        e.addEventListener('touchstart', dis);
     }
     static handleEvent(e) {
         const point = e.type == 'touchstart' || e.type == 'mousedown';
@@ -100,7 +94,7 @@ Draw.pos = {
 };
 Draw.enable = true;
 Draw.lineWidth = 10 * Surface.dpi;
-Draw.hue = 0;
+Draw.hue = "#000000";
 socket.emit('askRoom', window.location.pathname.split("/")[2] || '');
 socket.on('givenRoom', (data) => {
     history.replaceState(null, '', `/g/${data}`);
@@ -114,28 +108,19 @@ socket.on('drawSync', Draw.fromScratch);
 socket.on('draw', Draw.draw);
 (function setupListeners() {
     window.addEventListener('resize', Surface.resize);
-    document.addEventListener('mousemove', Draw.handleEvent);
-    document.addEventListener('mousedown', Draw.handleEvent);
-    document.addEventListener('mouseenter', Draw.setPosition);
-    document.addEventListener('mouseup', () => {
-        Draw.enable = true;
+    ['mousemove', 'mousedown', 'touchmove', 'touchstart'].forEach(event => {
+        document.getElementById('drawing').addEventListener(event, Draw.handleEvent);
     });
-    document.addEventListener('touchend', () => {
-        Draw.enable = true;
-    });
-    document.addEventListener('touchmove', Draw.handleEvent);
-    document.addEventListener('touchstart', Draw.handleEvent);
-    [...document.getElementsByTagName('input'), ...document.getElementsByTagName('button')].forEach(Draw.disableForElement);
+    document.getElementById('drawing').addEventListener('mouseenter', Draw.setPosition);
     document.getElementById('color').addEventListener('input', (e) => {
-        Draw.hue = parseInt(e.srcElement.value);
-        document.getElementById('colorExample').style.backgroundColor = strokeStyle(Draw.hue);
+        Draw.hue = e.target.value;
     });
     document.getElementById('size').addEventListener('input', e => {
         const example = document.getElementById('sizeExample').style;
-        example.width = e.srcElement.value;
-        example.height = e.srcElement.value;
-        example.marginBottom = (-e.srcElement.value / 2).toString();
-        Draw.lineWidth = parseInt(e.srcElement.value) * Surface.dpi;
+        example.width = e.target.value;
+        example.height = e.target.value;
+        example.marginBottom = (-e.target.value / 2).toString();
+        Draw.lineWidth = parseInt(e.target.value) * Surface.dpi;
     });
     document.getElementById('newWord').addEventListener('click', () => {
         document.getElementById('newWord').innerHTML = hardWords.words[Math.floor(Math.random() * hardWords.words.length)];

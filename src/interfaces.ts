@@ -1,6 +1,6 @@
 export interface Drawing {
     l?: number, //LineWidth
-    h?: number, //Hue
+    h?: string, //Hue
     old?: Point, //Old
     up?: Point, //Updated
     w?: number, //Width
